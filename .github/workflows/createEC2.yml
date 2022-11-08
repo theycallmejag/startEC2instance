@@ -1,0 +1,20 @@
+name: startMagent2DevEC2
+on:
+ #push:
+ #pull:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start AWS EC2
+        run: |
+          aws ec2 start-instances --instance-ids ${{secrets.AWS_EC2_INSTANCE_ID }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      - name: update ec2 instance
+        run: sudo apt update -y
+      - name: install docker
+        run: sudo apt install docker -y
