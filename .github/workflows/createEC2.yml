@@ -18,3 +18,5 @@ jobs:
         run: sudo apt update -y
       - name: install docker
         run: sudo apt install docker -y
+      - name: download Dockerfile
+        run: wget https://github.com/theycallmejag/springboot-project/blob/main/Dockerfile
