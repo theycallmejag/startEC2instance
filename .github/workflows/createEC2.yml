@@ -20,3 +20,5 @@ jobs:
         run: sudo apt install docker -y
       - name: download Dockerfile
         run: wget https://github.com/theycallmejag/springboot-project/blob/main/Dockerfile
+      - name: grant execute permissions
+        run: chmod +x Dockerfile
