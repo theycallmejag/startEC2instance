@@ -1,4 +1,4 @@
-name: startMagent2DevEC2
+name: EC2 Project
 on:
  #push:
  #pull:
