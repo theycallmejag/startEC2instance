@@ -27,9 +27,3 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: install docker
-        run: sudo apt install docker -y
-      - name: download Dockerfile
-        run: wget https://github.com/theycallmejag/springboot-project/blob/main/Dockerfile
-      - name: grant execute permissions
-        run: chmod +x Dockerfile
