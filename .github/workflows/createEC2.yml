@@ -29,3 +29,5 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: pull image from Dockerhub 
         run: docker pull theycallmejag/dockerhub-project:0.0.3
+      - name: download docker compose file
+        run: wget https://github.com/theycallmejag/springboot-project-compose/blob/main/docker-compose.yml
