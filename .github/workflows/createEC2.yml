@@ -31,7 +31,3 @@ jobs:
         run: docker pull theycallmejag/dockerhub-project:0.0.3
       - name: download docker compose file
         run: wget https://github.com/theycallmejag/springboot-project-compose/blob/main/docker-compose.yml
-      - name: run docker compose
-        uses: actions/checkout@v2
-      - name: run compose command
-        run: docker-compose up -d
