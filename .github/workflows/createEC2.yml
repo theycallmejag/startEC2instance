@@ -32,4 +32,4 @@ jobs:
       - name: download docker compose file
         run: wget https://github.com/theycallmejag/springboot-project-compose/blob/main/docker-compose.yml
       - name: start docker container
-        run: docker-compose -f "docker-compose.yml" up -d --build
+        run: docker-compose up -d
