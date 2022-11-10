@@ -1,32 +1,30 @@
-name: EC2 Project
-on: [push] 
+name: Start EC2 instance and copy over docker-compose file from repo 
+
+on:
+  push:   
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  build:
+  build: 
+
     runs-on: ubuntu-latest
     steps:
-      - name: Start AWS EC2
-        run: |
-          aws ec2 start-instances --instance-ids ${{secrets.AWS_EC2_INSTANCE_ID }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-      - name: update ec2 instance
-        run: sudo apt update -y
-      - name: install docker compose
-        run: sudo apt install -y docker-compose
-      - uses: actions/checkout@v3
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: pull image from Dockerhub 
-        run: docker pull theycallmejag/dockerhub-project:0.0.3
-      - name: run docker compose 
-        run: docker-compose up -d
+    - uses: actions/checkout@master
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: 
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "docker-compose.yml"
+        target: "/home/ubuntu/"
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: 18.222.106.50
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: docker-compose up -d
